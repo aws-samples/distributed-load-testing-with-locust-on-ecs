@@ -13,7 +13,7 @@ The number of  Locust master instance is always one, and it can be accessed via 
 On the other hand, there can be *N* Locust worker instances, which is usually the dominant factor of load test infrastructure cost.
 We use Fargate spot capacity for worker instances, which allows you to run load test at most 70% cheaper than on-demand capacity.
 
-Note that all the access from Locust workers go through NAT Gateway, which makes it easy to restrict access by IP addresses, because all the Locust workers shares the same outbound IP address among them.
+Note that all the access from Locust workers go through NAT Gateway, which makes it easy to restrict access by IP addresses on load test target servers, because all the Locust workers shares the same outbound IP address among them.
 
 ## Deploy
 To deploy this sample to your own AWS account, please follow the steps below.
