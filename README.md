@@ -120,7 +120,7 @@ Please open [`lib/constructs/locust_worker_service.ts`](lib/constructs/locust_wo
 
 You can specify the ratio of spot vs on-demand by `weight` property. The default is to use spot 100%.
 
-### Modify Locust scneario
+### Modify Locust scenario
 Default locustfile is placed on [`./app/locustfile.py`](app/locustfile.py).
 
 You can modify this file as you like. To deploy your change, run `cdk deploy` again.
