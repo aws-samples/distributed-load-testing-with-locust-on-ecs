@@ -15,6 +15,8 @@ export interface LocustMasterServiceProps {
   readonly certificateArn?: string;
   readonly allowedCidrs: string[];
   readonly logBucket: IBucket;
+  readonly webUsername?: string;
+  readonly webPassword?: string;
 }
 
 export class LocustMasterService extends Construct {
@@ -24,7 +26,7 @@ export class LocustMasterService extends Construct {
   constructor(scope: Construct, id: string, props: LocustMasterServiceProps) {
     super(scope, id);
 
-    const { cluster, image } = props;
+    const { cluster, image, webUsername, webPassword } = props;
 
     const configMapName = 'master';
 
@@ -40,9 +42,15 @@ export class LocustMasterService extends Construct {
       memoryLimitMiB: 2048,
     });
 
+    const command = ['--master'];
+    if (webUsername != null && webPassword != null) {
+      command.push('--web-auth');
+      command.push(`${webUsername}:${webPassword}`);
+    }
+
     masterTaskDefinition.addContainer('locust', {
       image,
-      command: ['--master'],
+      command,
       logging: ecs.LogDriver.awsLogs({
         streamPrefix: 'locust-master',
         logRetention: RetentionDays.SIX_MONTHS,
@@ -70,6 +78,7 @@ export class LocustMasterService extends Construct {
       protocol,
       certificate,
       sslPolicy: protocol == ApplicationProtocol.HTTPS ? SslPolicy.RECOMMENDED : undefined,
+      circuitBreaker: { rollback: true },
     });
 
     // https://github.com/aws/aws-cdk/issues/4015
@@ -78,6 +87,8 @@ export class LocustMasterService extends Construct {
     master.targetGroup.configureHealthCheck({
       interval: Duration.seconds(15),
       healthyThresholdCount: 2,
+      // regard 401 as healthy because we cannot use basic auth for health check
+      healthyHttpCodes: '200,401',
     });
 
     const port = protocol == ApplicationProtocol.HTTPS ? 443 : 80;

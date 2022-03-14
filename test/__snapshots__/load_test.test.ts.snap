@@ -324,8 +324,15 @@ Object {
           "Ref": "ClusterEB0386A7",
         },
         "DeploymentConfiguration": Object {
+          "DeploymentCircuitBreaker": Object {
+            "Enable": true,
+            "Rollback": true,
+          },
           "MaximumPercent": 200,
           "MinimumHealthyPercent": 50,
+        },
+        "DeploymentController": Object {
+          "Type": "ECS",
         },
         "DesiredCount": 1,
         "EnableECSManagedTags": false,
@@ -489,6 +496,9 @@ Object {
       "Properties": Object {
         "HealthCheckIntervalSeconds": 15,
         "HealthyThresholdCount": 2,
+        "Matcher": Object {
+          "HttpCode": "200,401",
+        },
         "Port": 80,
         "Protocol": "HTTP",
         "TargetGroupAttributes": Array [
