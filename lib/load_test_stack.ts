@@ -10,6 +10,8 @@ import { LocustWorkerService } from './constructs/locust_worker_service';
 interface LoadTestStackProps extends StackProps {
   readonly allowedCidrs: string[];
   readonly certificateArn?: string;
+  readonly webUsername?: string;
+  readonly webPassword?: string;
 }
 
 export class LoadTestStack extends Stack {
@@ -49,6 +51,8 @@ export class LoadTestStack extends Stack {
       certificateArn: props.certificateArn,
       allowedCidrs: props.allowedCidrs,
       logBucket,
+      webUsername: props.webUsername,
+      webPassword: props.webPassword,
     });
 
     const worker = new LocustWorkerService(this, 'Worker', {

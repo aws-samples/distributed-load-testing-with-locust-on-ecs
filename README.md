@@ -30,14 +30,16 @@ Also you need Administorator IAM policy to deploy this sample.
 ### 2. Set parameters
 Before deploy, you need to set some parameters.
 
-Please open [bin/load_test.ts](./bin/load_test.ts) and find property called `allowedCidrs`.
-This property specifies the CIDR which can access the Locust master Web GUI ALB.
-You need to set this as narrrow as possible because otherwise unwanted users can access your Locust control panel.
+Please open [bin/load_test.ts](./bin/load_test.ts) and find property named `allowedCidrs`.
+This property specifies the CIDRs which can access the Locust web UI ALB.
+You should set this as narrrow as possible because otherwise unwanted users can access your Locust control panel.
 
 To change the AWS region to deploy this samples to, please replace `us-west-2` in `env.region` property to your desired region.
 
 For additional security, you can set `certificateArn` and `env.account` to protect ALB with TLS.
 By default Locust Web GUI can be accessed with HTTP. You can make it HTTPS by those properties.
+
+You can also enable basic authentication for Locust web UI by specifying `webUsername` and `webPassword` properties.
 
 ### 3. Setup CDK
 After confirming the parameters, you can proceed to CDK deployment.
