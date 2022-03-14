@@ -1,4 +1,6 @@
 # Distributed Load Testing with Locust on Amazon ECS
+[![Build](https://github.com/aws-samples/distributed-load-testing-with-locust-on-ecs/actions/workflows/build.yml/badge.svg)](https://github.com/aws-samples/distributed-load-testing-with-locust-on-ecs/actions/workflows/build.yml)
+
 This sample shows you how to deploy [Locust](https://locust.io/), a modern load testing framework, to Amazon Elastic Container Service (ECS). It leverages a serverless compute engine [Fargate](https://aws.amazon.com/fargate/) with spot capacity, which allows you to run massive-scale load test without managing infrastructure and with relatively low cost (70% cheaper than using on-demand capacity).
 
 ## How it works
