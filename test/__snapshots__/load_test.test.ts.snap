@@ -81,7 +81,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-west-2",
           },
-          "S3Key": "bdb08b9984816ecf43301a0c6d8913e270ee2448940b6b95e430dd222a4d90be.zip",
+          "S3Key": "e57c1acaa363d7d2b81736776007a7091bc73dff4aeb8135627c4511a51e7dca.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -103,7 +103,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -420,7 +420,9 @@ Object {
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
         "VpcPublicSubnet1DefaultRoute3DA9E72A",
+        "VpcPublicSubnet1RouteTableAssociation97140677",
         "VpcPublicSubnet2DefaultRoute97F91067",
+        "VpcPublicSubnet2RouteTableAssociationDD5762D8",
       ],
       "Properties": Object {
         "LoadBalancerAttributes": Array [
@@ -1008,6 +1010,10 @@ Object {
       "Type": "AWS::EC2::EIP",
     },
     "VpcPublicSubnet1NATGateway4D7517AA": Object {
+      "DependsOn": Array [
+        "VpcPublicSubnet1DefaultRoute3DA9E72A",
+        "VpcPublicSubnet1RouteTableAssociation97140677",
+      ],
       "Properties": Object {
         "AllocationId": Object {
           "Fn::GetAtt": Array [
@@ -1184,7 +1190,7 @@ Object {
         },
         "DeploymentConfiguration": Object {
           "MaximumPercent": 200,
-          "MinimumHealthyPercent": 50,
+          "MinimumHealthyPercent": 0,
         },
         "EnableECSManagedTags": false,
         "NetworkConfiguration": Object {
@@ -1263,7 +1269,7 @@ Object {
             ],
           },
         ],
-        "Cpu": "4096",
+        "Cpu": "1024",
         "ExecutionRoleArn": Object {
           "Fn::GetAtt": Array [
             "WorkerTaskDefinitionExecutionRole04BD42F4",
@@ -1271,7 +1277,7 @@ Object {
           ],
         },
         "Family": "MyTestStackWorkerTaskDefinition957E58DF",
-        "Memory": "8192",
+        "Memory": "2048",
         "NetworkMode": "awsvpc",
         "RequiresCompatibilities": Array [
           "FARGATE",
