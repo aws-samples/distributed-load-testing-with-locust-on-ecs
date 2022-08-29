@@ -17,8 +17,9 @@ export class LocustWorkerService extends Construct {
     const { cluster, image } = props;
 
     const workerTaskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDefinition', {
-      cpu: 4096,
-      memoryLimitMiB: 8192,
+      // a locust worker can use only 1 core: https://github.com/locustio/locust/issues/1493
+      cpu: 1024,
+      memoryLimitMiB: 2048,
     });
 
     workerTaskDefinition
@@ -52,6 +53,7 @@ export class LocustWorkerService extends Construct {
           weight: 0,
         },
       ],
+      minHealthyPercent: 0,
     });
 
     this.service = service;
