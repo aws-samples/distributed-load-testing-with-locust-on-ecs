@@ -8,14 +8,14 @@ Below is the architecture diagram of this sample.
 
 ![architecture](imgs/architecture.png)
 
-We deploy Locust with distributed mode, so there are two ECS services, master service and worker service.
+We deploy Locust with distributed mode, hence two ECS services - Locust master and worker service.
 
-The number of  Locust master instance is always one, and it can be accessed via Application Load Balancer.
+The Locust master consists of a single Fargate task, and its Web GUI can be accessed via Application Load Balancer.
 
-On the other hand, there can be *N* Locust worker instances, which is usually the dominant factor of load test infrastructure cost.
-We use Fargate spot capacity for worker instances, which allows you to run load test at most 70% cheaper than on-demand capacity.
+Unlike master node, there can be *N* Locust worker nodes, which is usually the dominant factor of load test infrastructure cost.
+We use Fargate spot capacity for Locust workers, allowing you to run load tests at most 70% cheaper than on-demand capacity.
 
-Note that all the access from Locust workers go through NAT Gateway, which makes it easy to restrict access by IP addresses on load test target servers, because all the Locust workers shares the same outbound IP address among them.
+Note that all the access from Locust workers go through NAT Gateway, which makes it easy to restrict access by IP addresses on load test target servers, because all the Locust workers shares the same outbound IP address.
 
 ## Deploy
 To deploy this sample to your own AWS account, please follow the steps below.
@@ -30,7 +30,7 @@ Before you deploy, make sure you install the following tools in your local envir
 Also you need Administorator IAM policy to deploy this sample.
 
 ### 2. Set parameters
-Before deploy, you need to set some parameters.
+You need to set several parameters to configure the system.
 
 Please open [bin/load_test.ts](./bin/load_test.ts) and find property named `allowedCidrs`.
 This property specifies the CIDRs which can access the Locust web UI ALB.
@@ -90,9 +90,9 @@ Now the deployment is completed! You can start to use Locust load tester.
 There are a few things you need to know to use this sample effectively.
 
 ### Adjust the number of Locust worker tasks
-According to the amount of load you want to generate, you may need to increase Locust workers.
+Depending on the amount of load you want to generate, you may need to increase Locust worker capacity.
 
-It can be done with the following command:
+It can be adjusted with the following command:
 
 ```sh
 aws ecs update-service --cluster <EcsClusterArn> --service <WorkerServiceName> --desired-count <the number of workers>
