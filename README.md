@@ -110,8 +110,9 @@ Please also be aware that your default quota for the number of Fargate tasks is 
 If you need more tasks, you can request a limit increase from [Service Quotas console](https://console.aws.amazon.com/servicequotas/home). You can read further detail [here](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html).
 
 ### When Fargate spot is out of capacity
-It is expected that sometimes Fargate spot fails to run your Locust workers because of insufficient capacity.
-If such situation continues for unacceptable time, you can add on-demand instances to fill your desired task count.
+It is expected that sometimes Fargate spot fails to allocate the required capacity for your Locust workers because of insufficient capacity.
+That issue should resolve if you wait for certain time.
+However, if it continues for unacceptable time, you can always add on-demand capacity to fill your desired task count.
 
 Please open [`lib/constructs/locust_worker_service.ts`](lib/constructs/locust_worker_service.ts) and find the lines below:
 
@@ -128,7 +129,7 @@ Please open [`lib/constructs/locust_worker_service.ts`](lib/constructs/locust_wo
       ],
 ```
 
-You can specify the ratio of spot vs on-demand by `weight` property. The default is to use spot 100%.
+You can specify the ratio of spot (`FARGATE_SPOT`) vs on-demand (`FARGATE`) by the `weight` properties. The default is to use spot 100% (1:0).
 
 ### Modify Locust scenario
 Default locustfile is placed on [`./app/locustfile.py`](app/locustfile.py).
