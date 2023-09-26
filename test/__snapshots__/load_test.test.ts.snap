@@ -81,7 +81,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-west-2",
           },
-          "S3Key": "350185a1069fa20a23a583e20c77f6844218bd73097902362dc94f1a108f5d89.zip",
+          "S3Key": "5194f926380567b6fdffc61629afdad2afc818614cb227df45e499c69db163a7.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -95,7 +95,7 @@ Object {
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -103,7 +103,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -129,6 +129,21 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "EcsSlr": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c35E89C93F",
+            "Arn",
+          ],
+        },
+        "awsServiceName": "ecs.amazonaws.com",
+        "waitTimeSeconds": 60,
+      },
+      "Type": "Custom::UpsertServiceLinkedRole",
+      "UpdateReplacePolicy": "Delete",
     },
     "LogBucketAutoDeleteObjectsCustomResource7762F42C": Object {
       "DeletionPolicy": "Delete",
@@ -311,12 +326,18 @@ Object {
       "DependsOn": Array [
         "MasterServiceLBPublicListenerECSGroup2ADF8BD2",
         "MasterServiceLBPublicListener6927AEE3",
+        "MasterTaskDefinitionTaskRole4D5064F8",
       ],
       "Properties": Object {
         "Cluster": Object {
           "Ref": "ClusterEB0386A7",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "DeploymentCircuitBreaker": Object {
             "Enable": true,
             "Rollback": true,
@@ -378,6 +399,9 @@ Object {
       "Type": "AWS::ECS::Service",
     },
     "MasterServiceCloudmapService131FE122": Object {
+      "DependsOn": Array [
+        "MasterTaskDefinitionTaskRole4D5064F8",
+      ],
       "Properties": Object {
         "DnsConfig": Object {
           "DnsRecords": Array [
@@ -563,6 +587,9 @@ Object {
       "Type": "AWS::EC2::SecurityGroupEgress",
     },
     "MasterServiceSecurityGroup15959E4E": Object {
+      "DependsOn": Array [
+        "MasterTaskDefinitionTaskRole4D5064F8",
+      ],
       "Properties": Object {
         "GroupDescription": "MyTestStack/Master/Service/Service/SecurityGroup",
         "SecurityGroupEgress": Array [
@@ -579,6 +606,9 @@ Object {
       "Type": "AWS::EC2::SecurityGroup",
     },
     "MasterServiceSecurityGroupfromMyTestStackMasterServiceLBSecurityGroupF151AF3D80891A97AF54": Object {
+      "DependsOn": Array [
+        "MasterTaskDefinitionTaskRole4D5064F8",
+      ],
       "Properties": Object {
         "Description": "Load balancer to target",
         "FromPort": 8089,
@@ -600,6 +630,9 @@ Object {
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
     "MasterServiceSecurityGroupfromMyTestStackWorkerServiceSecurityGroup4859B45B55573987A617": Object {
+      "DependsOn": Array [
+        "MasterTaskDefinitionTaskRole4D5064F8",
+      ],
       "Properties": Object {
         "Description": "from MyTestStackWorkerServiceSecurityGroup4859B45B:5557",
         "FromPort": 5557,
@@ -775,6 +808,81 @@ Object {
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Retain",
     },
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c35E89C93F": Object {
+      "DependsOn": Array [
+        "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B",
+        "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "\\"use strict\\";var i=Object.defineProperty;var l=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var p=Object.prototype.hasOwnProperty;var m=(e,s)=>{for(var r in s)i(e,r,{get:s[r],enumerable:!0})},u=(e,s,r,a)=>{if(s&&typeof s==\\"object\\"||typeof s==\\"function\\")for(let t of d(s))!p.call(e,t)&&t!==r&&i(e,t,{get:()=>s[t],enumerable:!(a=l(s,t))||a.enumerable});return e};var S=e=>u(i({},\\"__esModule\\",{value:!0}),e);var y={};m(y,{handler:()=>R});module.exports=S(y);var o=require(\\"@aws-sdk/client-iam\\"),n=require(\\"timers/promises\\"),g=new o.IAMClient({}),R=async(e,s)=>{try{switch(e.RequestType){case\\"Create\\":console.log(\`trying to create a service linked role for \${e.ResourceProperties.awsServiceName}\`);let r=new o.CreateServiceLinkedRoleCommand({AWSServiceName:e.ResourceProperties.awsServiceName,Description:e.ResourceProperties.description,CustomSuffix:e.ResourceProperties.customSuffix});await g.send(r),console.log(\\"the service linked role created successfully, now waiting for IAM propagation\\"),await(0,n.setTimeout)(e.ResourceProperties.waitTimeSeconds*1e3);break;case\\"Update\\":break;case\\"Delete\\":break}await c(\\"SUCCESS\\",e,s)}catch(r){r instanceof o.InvalidInputException?(console.log(\`The service linked role seems to already exist, skipping the creation... \${r.message}\`),await c(\\"SUCCESS\\",e,s)):await c(\\"FAILED\\",e,s,r.message)}},c=async(e,s,r,a)=>{let t=JSON.stringify({Status:e,Reason:a??\\"See the details in CloudWatch Log Stream: \\"+r.logStreamName,PhysicalResourceId:r.logStreamName,StackId:s.StackId,RequestId:s.RequestId,LogicalResourceId:s.LogicalResourceId,NoEcho:!1,Data:{}});await(await fetch(s.ResponseURL,{method:\\"PUT\\",body:t,headers:{\\"Content-Type\\":\\"\\",\\"Content-Length\\":t.length.toString()}})).text()};0&&(module.exports={handler});
+",
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs18.x",
+        "Timeout": 180,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "iam:CreateServiceLinkedRole",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B",
+        "Roles": Array [
+          Object {
+            "Ref": "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "Vpc8378EB38": Object {
       "Properties": Object {
         "CidrBlock": "10.0.0.0/16",
@@ -819,7 +927,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "MyTestStack/Vpc",
+            "Value": "MyTestStack/Vpc/FlowLogS3",
           },
         ],
         "TrafficType": "ALL",
@@ -1167,6 +1275,9 @@ Object {
       "Type": "AWS::EC2::VPCGatewayAttachment",
     },
     "WorkerService3F60922A": Object {
+      "DependsOn": Array [
+        "WorkerTaskDefinitionTaskRoleDCDA51F5",
+      ],
       "Properties": Object {
         "CapacityProviderStrategy": Array [
           Object {
@@ -1182,6 +1293,11 @@ Object {
           "Ref": "ClusterEB0386A7",
         },
         "DeploymentConfiguration": Object {
+          "Alarms": Object {
+            "AlarmNames": Array [],
+            "Enable": false,
+            "Rollback": false,
+          },
           "MaximumPercent": 200,
           "MinimumHealthyPercent": 0,
         },
@@ -1214,6 +1330,9 @@ Object {
       "Type": "AWS::ECS::Service",
     },
     "WorkerServiceSecurityGroup31B1E69F": Object {
+      "DependsOn": Array [
+        "WorkerTaskDefinitionTaskRoleDCDA51F5",
+      ],
       "Properties": Object {
         "GroupDescription": "MyTestStack/Worker/Service/SecurityGroup",
         "SecurityGroupEgress": Array [
