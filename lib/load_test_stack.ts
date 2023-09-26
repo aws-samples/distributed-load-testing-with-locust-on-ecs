@@ -41,7 +41,7 @@ export class LoadTestStack extends Stack {
     // https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html
     new ServiceLinkedRole(this, 'EcsSlr', {
       awsServiceName: 'ecs.amazonaws.com',
-     });
+    });
 
     const cluster = new ecs.Cluster(this, 'Cluster', {
       vpc,
