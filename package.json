@@ -13,15 +13,16 @@
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "@types/node": "^16",
-    "aws-cdk": "^2.4.0",
+    "aws-cdk": "2.92.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
     "ts-node": "^10.0.0",
     "typescript": "~4.8.2"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.80.0",
+    "aws-cdk-lib": "2.92.0",
     "constructs": "^10.0.0",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "upsert-slr": "^1.0.1"
   }
 }
