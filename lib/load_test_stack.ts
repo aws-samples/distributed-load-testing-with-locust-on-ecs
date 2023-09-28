@@ -39,7 +39,7 @@ export class LoadTestStack extends Stack {
     vpc.node.findChild('FlowLogS3').node.findChild('FlowLog').node.addDependency(logBucket);
 
     // https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.html
-    new ServiceLinkedRole(this, 'EcsSlr', {
+    const slr = new ServiceLinkedRole(this, 'EcsSlr', {
       awsServiceName: 'ecs.amazonaws.com',
     });
 
@@ -48,6 +48,9 @@ export class LoadTestStack extends Stack {
       defaultCloudMapNamespace: { name: 'locust' },
       containerInsights: true,
     });
+
+    // don't create the cluster before ECS service linked role is created
+    cluster.node.defaultChild!.node.addDependency(slr);
 
     const locustImage = new AssetImage('app');
 

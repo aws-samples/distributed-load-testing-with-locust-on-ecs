@@ -62,6 +62,9 @@ Object {
       "Type": "AWS::ServiceDiscovery::PrivateDnsNamespace",
     },
     "ClusterEB0386A7": Object {
+      "DependsOn": Array [
+        "EcsSlr",
+      ],
       "Properties": Object {
         "ClusterSettings": Array [
           Object {
