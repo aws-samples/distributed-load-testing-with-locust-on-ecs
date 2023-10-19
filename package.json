@@ -1,5 +1,5 @@
 {
-  "name": "load_test",
+  "name": "@aws-samples/load_test",
   "version": "0.1.0",
   "bin": {
     "load_test": "bin/load_test.js"
