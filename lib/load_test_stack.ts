@@ -52,10 +52,7 @@ export class LoadTestStack extends Stack {
     // don't create the cluster before ECS service linked role is created
     cluster.node.defaultChild!.node.addDependency(slr);
 
-    const locustImage = new AssetImage('app');
-
     const master = new LocustMasterService(this, 'Master', {
-      image: locustImage,
       cluster,
       certificateArn: props.certificateArn,
       allowedCidrs: props.allowedCidrs,
@@ -65,7 +62,6 @@ export class LoadTestStack extends Stack {
     });
 
     const worker = new LocustWorkerService(this, 'Worker', {
-      image: locustImage,
       cluster,
       locustMasterHostName: master.configMapHostname,
     });

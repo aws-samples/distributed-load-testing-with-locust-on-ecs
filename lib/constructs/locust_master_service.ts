@@ -10,7 +10,6 @@ import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { LocustWorkerService } from './locust_worker_service';
 
 export interface LocustMasterServiceProps {
-  readonly image: ecs.ContainerImage;
   readonly cluster: ecs.ICluster;
   readonly certificateArn?: string;
   readonly allowedCidrs: string[];
@@ -26,9 +25,10 @@ export class LocustMasterService extends Construct {
   constructor(scope: Construct, id: string, props: LocustMasterServiceProps) {
     super(scope, id);
 
-    const { cluster, image, webUsername, webPassword } = props;
+    const { cluster, webUsername, webPassword } = props;
 
     const configMapName = 'master';
+    const image = new ecs.AssetImage('app');
 
     const protocol = props.certificateArn != null ? ApplicationProtocol.HTTPS : ApplicationProtocol.HTTP;
 
