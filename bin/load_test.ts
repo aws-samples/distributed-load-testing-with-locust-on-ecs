@@ -23,4 +23,12 @@ new LoadTestStack(app, 'LoadTestStack', {
   // You can enable basic auth for Locust web UI uncommenting lines below:
   // webUsername: 'admin',
   // webPassword: 'passw0rd',
+
+  // List of tags to include in the test, so only tasks
+  // with any matching tags will be executed.
+  // includedTags: [],
+
+  // List of tags to exclude from the test, so only tasks
+  // with no matching tags will be executed.
+  // excludedTags: [],
 });
