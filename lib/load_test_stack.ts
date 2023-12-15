@@ -11,6 +11,7 @@ import { ServiceLinkedRole } from 'upsert-slr';
 interface LoadTestStackProps extends StackProps {
   readonly allowedCidrs: string[];
   readonly certificateArn?: string;
+  readonly additionalArguments?: string[];
   readonly webUsername?: string;
   readonly webPassword?: string;
 }
@@ -57,6 +58,7 @@ export class LoadTestStack extends Stack {
       certificateArn: props.certificateArn,
       allowedCidrs: props.allowedCidrs,
       logBucket,
+      additionalArguments: props.additionalArguments,
       webUsername: props.webUsername,
       webPassword: props.webPassword,
     });
