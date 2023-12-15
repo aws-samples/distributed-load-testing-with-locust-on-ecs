@@ -24,11 +24,9 @@ new LoadTestStack(app, 'LoadTestStack', {
   // webUsername: 'admin',
   // webPassword: 'passw0rd',
 
-  // List of tags to include in the test, so only tasks
-  // with any matching tags will be executed.
-  // includedTags: [],
-
-  // List of tags to exclude from the test, so only tasks
+  // Any arbitrary command line options to pass to Locust.
+  // An example would be:
+  // Exclude Tags - List of tags to exclude from the test, so only tasks
   // with no matching tags will be executed.
-  // excludedTags: [],
+  // additionalArguments: ['--exclude-tags', 'tag1', 'tag2'],
 });

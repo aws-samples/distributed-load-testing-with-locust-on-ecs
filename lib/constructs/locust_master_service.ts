@@ -14,8 +14,7 @@ export interface LocustMasterServiceProps {
   readonly certificateArn?: string;
   readonly allowedCidrs: string[];
   readonly logBucket: IBucket;
-  readonly includedTags?: string[];
-  readonly excludedTags?: string[];
+  readonly additionalArguments?: string[];
   readonly webUsername?: string;
   readonly webPassword?: string;
 }
@@ -27,7 +26,7 @@ export class LocustMasterService extends Construct {
   constructor(scope: Construct, id: string, props: LocustMasterServiceProps) {
     super(scope, id);
 
-    const { cluster, includedTags, excludedTags, webUsername, webPassword } = props;
+    const { cluster, additionalArguments, webUsername, webPassword } = props;
 
     const configMapName = 'master';
     const image = new ecs.AssetImage('app');
@@ -49,17 +48,8 @@ export class LocustMasterService extends Construct {
       command.push('--web-auth');
       command.push(`${webUsername}:${webPassword}`);
     }
-    if (includedTags != null) {
-      command.push('--tags');
-      includedTags.forEach((tag) =>
-        command.push(tag),
-      );
-    }
-    if (excludedTags != null) {
-      command.push('--exclude-tags');
-      excludedTags.forEach((tag) =>
-        command.push(tag),
-      );
+    if (additionalArguments != null) {
+      command.push(...additionalArguments);
     }
     masterTaskDefinition.addContainer('locust', {
       image,
