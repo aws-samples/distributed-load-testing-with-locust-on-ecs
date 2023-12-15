@@ -1,5 +1,9 @@
 name: Build
-on: [push, workflow_dispatch]
+on: 
+  push:
+  workflow_dispatch:
+  pull_request_target:
+
 jobs:
   Build-and-Test-CDK:
     runs-on: ubuntu-latest
