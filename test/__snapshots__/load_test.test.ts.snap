@@ -665,7 +665,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:a74a7c24e409fc89d6317c2ff4aa4c7e3a1d86f887c037ac797018cc1cff9b3a",
+              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:1aff61a5b55d5c576d3f1bb26ebf82f36e873ace9bc1ef22139a7fab150e9d64",
             },
             "LogConfiguration": Object {
               "LogDriver": "awslogs",
@@ -1362,7 +1362,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:a74a7c24e409fc89d6317c2ff4aa4c7e3a1d86f887c037ac797018cc1cff9b3a",
+              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:1aff61a5b55d5c576d3f1bb26ebf82f36e873ace9bc1ef22139a7fab150e9d64",
             },
             "LogConfiguration": Object {
               "LogDriver": "awslogs",
