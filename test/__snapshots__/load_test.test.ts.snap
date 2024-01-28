@@ -519,7 +519,7 @@ Object {
         "HealthCheckIntervalSeconds": 15,
         "HealthyThresholdCount": 2,
         "Matcher": Object {
-          "HttpCode": "200,401",
+          "HttpCode": "200,302",
         },
         "Port": 80,
         "Protocol": "HTTP",
@@ -662,10 +662,25 @@ Object {
           Object {
             "Command": Array [
               "--master",
+              "--web-login",
+            ],
+            "Environment": Array [
+              Object {
+                "Name": "LOCUST_USERNAME",
+                "Value": "user",
+              },
+              Object {
+                "Name": "LOCUST_PASSWORD",
+                "Value": "password",
+              },
+              Object {
+                "Name": "FLASK_SECRET_KEY",
+                "Value": "dummy",
+              },
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:1aff61a5b55d5c576d3f1bb26ebf82f36e873ace9bc1ef22139a7fab150e9d64",
+              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:acf5aec7883de3f2a3edc29670a9454d2868d3dc69a64611bfdde26fd8be8f71",
             },
             "LogConfiguration": Object {
               "LogDriver": "awslogs",
@@ -1362,7 +1377,7 @@ Object {
             ],
             "Essential": true,
             "Image": Object {
-              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:1aff61a5b55d5c576d3f1bb26ebf82f36e873ace9bc1ef22139a7fab150e9d64",
+              "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:acf5aec7883de3f2a3edc29670a9454d2868d3dc69a64611bfdde26fd8be8f71",
             },
             "LogConfiguration": Object {
               "LogDriver": "awslogs",

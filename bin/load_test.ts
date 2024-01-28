@@ -20,7 +20,7 @@ new LoadTestStack(app, 'LoadTestStack', {
   // since Locust Web UI does NOT have any authentication mechanism
   allowedCidrs: ['127.0.0.1/32'],
   
-  // You can enable basic auth for Locust web UI uncommenting lines below:
+  // You can enable password auth for Locust web UI uncommenting lines below:
   // webUsername: 'admin',
   // webPassword: 'passw0rd',
 
