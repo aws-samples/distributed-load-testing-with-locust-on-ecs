@@ -1,6 +1,7 @@
 import { Construct } from 'constructs';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import { RetentionDays } from 'aws-cdk-lib/aws-logs';
+import { Platform } from 'aws-cdk-lib/aws-ecr-assets';
 
 export interface LocustWorkerServiceProps {
   readonly cluster: ecs.ICluster;
@@ -15,7 +16,7 @@ export class LocustWorkerService extends Construct {
 
     const { cluster } = props;
 
-    const image = new ecs.AssetImage('app');
+    const image = new ecs.AssetImage('app', { platform: Platform.LINUX_AMD64 });
 
     const workerTaskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDefinition', {
       // a locust worker can use only 1 core: https://github.com/locustio/locust/issues/1493

@@ -8,6 +8,7 @@ import { IBucket } from 'aws-cdk-lib/aws-s3';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { LocustWorkerService } from './locust_worker_service';
+import { Platform } from 'aws-cdk-lib/aws-ecr-assets';
 
 export interface LocustMasterServiceProps {
   readonly cluster: ecs.ICluster;
@@ -29,7 +30,7 @@ export class LocustMasterService extends Construct {
     const { cluster, additionalArguments, webUsername, webPassword } = props;
 
     const configMapName = 'master';
-    const image = new ecs.AssetImage('app');
+    const image = new ecs.AssetImage('app', { platform: Platform.LINUX_AMD64 });
 
     const protocol = props.certificateArn != null ? ApplicationProtocol.HTTPS : ApplicationProtocol.HTTP;
 
@@ -43,10 +44,13 @@ export class LocustMasterService extends Construct {
       memoryLimitMiB: 2048,
     });
 
+    let environment: { [key: string]: string } = {};
     const command = ['--master'];
     if (webUsername != null && webPassword != null) {
-      command.push('--web-auth');
-      command.push(`${webUsername}:${webPassword}`);
+      command.push('--web-login');
+      environment['LOCUST_USERNAME'] = webUsername;
+      environment['LOCUST_PASSWORD'] = webPassword;
+      environment['FLASK_SECRET_KEY'] = 'dummy'; // this is somehow required for Locust
     }
     if (additionalArguments != null) {
       command.push(...additionalArguments);
@@ -63,6 +67,7 @@ export class LocustMasterService extends Construct {
           containerPort: 8089,
         },
       ],
+      environment,
     });
 
     const master = new ApplicationLoadBalancedFargateService(this, 'Service', {
@@ -90,8 +95,8 @@ export class LocustMasterService extends Construct {
     master.targetGroup.configureHealthCheck({
       interval: Duration.seconds(15),
       healthyThresholdCount: 2,
-      // regard 401 as healthy because we cannot use basic auth for health check
-      healthyHttpCodes: '200,401',
+      // regard 302 as healthy because Locust redirects unauthenticated requests
+      healthyHttpCodes: '200,302',
     });
 
     const port = protocol == ApplicationProtocol.HTTPS ? 443 : 80;

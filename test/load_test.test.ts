@@ -10,6 +10,8 @@ test('Snapshot test', () => {
       region: 'us-west-2',
     },
     allowedCidrs: ['0.0.0.0/0'],
+    webUsername: 'user',
+    webPassword: 'password',
   });
   // THEN
   const template = Template.fromStack(stack);
