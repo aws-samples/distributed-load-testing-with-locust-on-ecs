@@ -17,7 +17,7 @@ new LoadTestStack(app, 'LoadTestStack', {
 
   // CIDRs that can access Locust Web UI ALB.
   // It is highly recommended to set this CIDR as narrowly as possible
-  // since Locust Web UI does NOT have any authentication mechanism
+  // when you do not enable the authentication option below.
   allowedCidrs: ['127.0.0.1/32'],
   
   // You can enable password auth for Locust web UI uncommenting lines below:
