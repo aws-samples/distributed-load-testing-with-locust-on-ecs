@@ -1,32 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Snapshot test 1`] = `
-Object {
-  "Outputs": Object {
-    "EcsClusterArn": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
+{
+  "Outputs": {
+    "EcsClusterArn": {
+      "Value": {
+        "Fn::GetAtt": [
           "ClusterEB0386A7",
           "Arn",
         ],
       },
     },
-    "MasterServiceLoadBalancerDNSD23C49A7": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
+    "MasterServiceLoadBalancerDNSD23C49A7": {
+      "Value": {
+        "Fn::GetAtt": [
           "MasterServiceLBA62FC209",
           "DNSName",
         ],
       },
     },
-    "MasterServiceServiceURL66A06FCF": Object {
-      "Value": Object {
-        "Fn::Join": Array [
+    "MasterServiceServiceURL66A06FCF": {
+      "Value": {
+        "Fn::Join": [
           "",
-          Array [
+          [
             "http://",
-            Object {
-              "Fn::GetAtt": Array [
+            {
+              "Fn::GetAtt": [
                 "MasterServiceLBA62FC209",
                 "DNSName",
               ],
@@ -35,39 +35,39 @@ Object {
         ],
       },
     },
-    "WorkerServiceName": Object {
-      "Value": Object {
-        "Fn::GetAtt": Array [
+    "WorkerServiceName": {
+      "Value": {
+        "Fn::GetAtt": [
           "WorkerService3F60922A",
           "Name",
         ],
       },
     },
   },
-  "Parameters": Object {
-    "BootstrapVersion": Object {
+  "Parameters": {
+    "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
       "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
-  "Resources": Object {
-    "ClusterDefaultServiceDiscoveryNamespaceC336F9B4": Object {
-      "Properties": Object {
+  "Resources": {
+    "ClusterDefaultServiceDiscoveryNamespaceC336F9B4": {
+      "Properties": {
         "Name": "locust",
-        "Vpc": Object {
+        "Vpc": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::ServiceDiscovery::PrivateDnsNamespace",
     },
-    "ClusterEB0386A7": Object {
-      "DependsOn": Array [
+    "ClusterEB0386A7": {
+      "DependsOn": [
         "EcsSlr",
       ],
-      "Properties": Object {
-        "ClusterSettings": Array [
-          Object {
+      "Properties": {
+        "ClusterSettings": [
+          {
             "Name": "containerInsights",
             "Value": "enabled",
           },
@@ -75,23 +75,23 @@ Object {
       },
       "Type": "AWS::ECS::Cluster",
     },
-    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": Object {
-      "DependsOn": Array [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+      "DependsOn": [
         "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
       ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-west-2",
           },
           "S3Key": "5194f926380567b6fdffc61629afdad2afc818614cb227df45e499c69db163a7.zip",
         },
-        "Description": Object {
-          "Fn::Join": Array [
+        "Description": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "Lambda function for auto-deleting objects in ",
-              Object {
+              {
                 "Ref": "LogBucketCC3B17E8",
               },
               " S3 bucket.",
@@ -100,8 +100,8 @@ Object {
         },
         "Handler": "index.handler",
         "MemorySize": 128,
-        "Role": Object {
-          "Fn::GetAtt": Array [
+        "Role": {
+          "Fn::GetAtt": [
             "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
             "Arn",
           ],
@@ -111,33 +111,33 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
+        "ManagedPolicyArns": [
+          {
             "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
           },
         ],
       },
       "Type": "AWS::IAM::Role",
     },
-    "EcsSlr": Object {
+    "EcsSlr": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c35E89C93F",
             "Arn",
           ],
@@ -148,17 +148,17 @@ Object {
       "Type": "Custom::UpsertServiceLinkedRole",
       "UpdateReplacePolicy": "Delete",
     },
-    "LogBucketAutoDeleteObjectsCustomResource7762F42C": Object {
+    "LogBucketAutoDeleteObjectsCustomResource7762F42C": {
       "DeletionPolicy": "Delete",
-      "DependsOn": Array [
+      "DependsOn": [
         "LogBucketPolicy900DBE48",
       ],
-      "Properties": Object {
-        "BucketName": Object {
+      "Properties": {
+        "BucketName": {
           "Ref": "LogBucketCC3B17E8",
         },
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
             "Arn",
           ],
@@ -167,26 +167,26 @@ Object {
       "Type": "Custom::S3AutoDeleteObjects",
       "UpdateReplacePolicy": "Delete",
     },
-    "LogBucketCC3B17E8": Object {
+    "LogBucketCC3B17E8": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "BucketEncryption": Object {
-          "ServerSideEncryptionConfiguration": Array [
-            Object {
-              "ServerSideEncryptionByDefault": Object {
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
                 "SSEAlgorithm": "AES256",
               },
             },
           ],
         },
-        "PublicAccessBlockConfiguration": Object {
+        "PublicAccessBlockConfiguration": {
           "BlockPublicAcls": true,
           "BlockPublicPolicy": true,
           "IgnorePublicAcls": true,
           "RestrictPublicBuckets": true,
         },
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:auto-delete-objects",
             "Value": "true",
           },
@@ -195,41 +195,41 @@ Object {
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
     },
-    "LogBucketPolicy900DBE48": Object {
-      "Properties": Object {
-        "Bucket": Object {
+    "LogBucketPolicy900DBE48": {
+      "Properties": {
+        "Bucket": {
           "Ref": "LogBucketCC3B17E8",
         },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
               ],
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
                     "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
                     "Arn",
                   ],
                 },
               },
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "LogBucketCC3B17E8",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "LogBucketCC3B17E8",
                           "Arn",
                         ],
@@ -240,16 +240,16 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Action": "s3:PutObject",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::797873946194:root",
@@ -257,18 +257,18 @@ Object {
                   ],
                 },
               },
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "LogBucketCC3B17E8",
                         "Arn",
                       ],
                     },
                     "/locustAlbAccessLog/AWSLogs/",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     "/*",
@@ -276,29 +276,29 @@ Object {
                 ],
               },
             },
-            Object {
+            {
               "Action": "s3:PutObject",
-              "Condition": Object {
-                "StringEquals": Object {
+              "Condition": {
+                "StringEquals": {
                   "s3:x-amz-acl": "bucket-owner-full-control",
                 },
               },
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "delivery.logs.amazonaws.com",
               },
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "LogBucketCC3B17E8",
                         "Arn",
                       ],
                     },
                     "/locustAlbAccessLog/AWSLogs/",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     "/*",
@@ -306,14 +306,14 @@ Object {
                 ],
               },
             },
-            Object {
+            {
               "Action": "s3:GetBucketAcl",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "delivery.logs.amazonaws.com",
               },
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "LogBucketCC3B17E8",
                   "Arn",
                 ],
@@ -325,108 +325,108 @@ Object {
       },
       "Type": "AWS::S3::BucketPolicy",
     },
-    "MasterService71606C9C": Object {
-      "DependsOn": Array [
+    "MasterService71606C9C": {
+      "DependsOn": [
         "MasterServiceLBPublicListenerECSGroup2ADF8BD2",
         "MasterServiceLBPublicListener6927AEE3",
         "MasterTaskDefinitionTaskRole4D5064F8",
       ],
-      "Properties": Object {
-        "Cluster": Object {
+      "Properties": {
+        "Cluster": {
           "Ref": "ClusterEB0386A7",
         },
-        "DeploymentConfiguration": Object {
-          "Alarms": Object {
-            "AlarmNames": Array [],
+        "DeploymentConfiguration": {
+          "Alarms": {
+            "AlarmNames": [],
             "Enable": false,
             "Rollback": false,
           },
-          "DeploymentCircuitBreaker": Object {
+          "DeploymentCircuitBreaker": {
             "Enable": true,
             "Rollback": true,
           },
           "MaximumPercent": 200,
           "MinimumHealthyPercent": 50,
         },
-        "DeploymentController": Object {
+        "DeploymentController": {
           "Type": "ECS",
         },
         "DesiredCount": 1,
         "EnableECSManagedTags": false,
         "HealthCheckGracePeriodSeconds": 20,
         "LaunchType": "FARGATE",
-        "LoadBalancers": Array [
-          Object {
+        "LoadBalancers": [
+          {
             "ContainerName": "locust",
             "ContainerPort": 8089,
-            "TargetGroupArn": Object {
+            "TargetGroupArn": {
               "Ref": "MasterServiceLBPublicListenerECSGroup2ADF8BD2",
             },
           },
         ],
-        "NetworkConfiguration": Object {
-          "AwsvpcConfiguration": Object {
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
             "AssignPublicIp": "DISABLED",
-            "SecurityGroups": Array [
-              Object {
-                "Fn::GetAtt": Array [
+            "SecurityGroups": [
+              {
+                "Fn::GetAtt": [
                   "MasterServiceSecurityGroup15959E4E",
                   "GroupId",
                 ],
               },
             ],
-            "Subnets": Array [
-              Object {
+            "Subnets": [
+              {
                 "Ref": "VpcPrivateSubnet1Subnet536B997A",
               },
-              Object {
+              {
                 "Ref": "VpcPrivateSubnet2Subnet3788AAA1",
               },
             ],
           },
         },
-        "ServiceRegistries": Array [
-          Object {
-            "RegistryArn": Object {
-              "Fn::GetAtt": Array [
+        "ServiceRegistries": [
+          {
+            "RegistryArn": {
+              "Fn::GetAtt": [
                 "MasterServiceCloudmapService131FE122",
                 "Arn",
               ],
             },
           },
         ],
-        "TaskDefinition": Object {
+        "TaskDefinition": {
           "Ref": "MasterTaskDefinition1C9B90C0",
         },
       },
       "Type": "AWS::ECS::Service",
     },
-    "MasterServiceCloudmapService131FE122": Object {
-      "DependsOn": Array [
+    "MasterServiceCloudmapService131FE122": {
+      "DependsOn": [
         "MasterTaskDefinitionTaskRole4D5064F8",
       ],
-      "Properties": Object {
-        "DnsConfig": Object {
-          "DnsRecords": Array [
-            Object {
+      "Properties": {
+        "DnsConfig": {
+          "DnsRecords": [
+            {
               "TTL": 60,
               "Type": "A",
             },
           ],
-          "NamespaceId": Object {
-            "Fn::GetAtt": Array [
+          "NamespaceId": {
+            "Fn::GetAtt": [
               "ClusterDefaultServiceDiscoveryNamespaceC336F9B4",
               "Id",
             ],
           },
           "RoutingPolicy": "MULTIVALUE",
         },
-        "HealthCheckCustomConfig": Object {
+        "HealthCheckCustomConfig": {
           "FailureThreshold": 1,
         },
         "Name": "master",
-        "NamespaceId": Object {
-          "Fn::GetAtt": Array [
+        "NamespaceId": {
+          "Fn::GetAtt": [
             "ClusterDefaultServiceDiscoveryNamespaceC336F9B4",
             "Id",
           ],
@@ -434,8 +434,8 @@ Object {
       },
       "Type": "AWS::ServiceDiscovery::Service",
     },
-    "MasterServiceLBA62FC209": Object {
-      "DependsOn": Array [
+    "MasterServiceLBA62FC209": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
@@ -444,41 +444,41 @@ Object {
         "VpcPublicSubnet2DefaultRoute97F91067",
         "VpcPublicSubnet2RouteTableAssociationDD5762D8",
       ],
-      "Properties": Object {
-        "LoadBalancerAttributes": Array [
-          Object {
+      "Properties": {
+        "LoadBalancerAttributes": [
+          {
             "Key": "deletion_protection.enabled",
             "Value": "false",
           },
-          Object {
+          {
             "Key": "access_logs.s3.enabled",
             "Value": "true",
           },
-          Object {
+          {
             "Key": "access_logs.s3.bucket",
-            "Value": Object {
+            "Value": {
               "Ref": "LogBucketCC3B17E8",
             },
           },
-          Object {
+          {
             "Key": "access_logs.s3.prefix",
             "Value": "locustAlbAccessLog",
           },
         ],
         "Scheme": "internet-facing",
-        "SecurityGroups": Array [
-          Object {
-            "Fn::GetAtt": Array [
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
               "MasterServiceLBSecurityGroupD08B195F",
               "GroupId",
             ],
           },
         ],
-        "Subnets": Array [
-          Object {
+        "Subnets": [
+          {
             "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
           },
-          Object {
+          {
             "Ref": "VpcPublicSubnet2Subnet691E08A3",
           },
         ],
@@ -486,22 +486,22 @@ Object {
       },
       "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
     },
-    "MasterServiceLBPublicListener6927AEE3": Object {
-      "DependsOn": Array [
+    "MasterServiceLBPublicListener6927AEE3": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
       ],
-      "Properties": Object {
-        "DefaultActions": Array [
-          Object {
-            "TargetGroupArn": Object {
+      "Properties": {
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
               "Ref": "MasterServiceLBPublicListenerECSGroup2ADF8BD2",
             },
             "Type": "forward",
           },
         ],
-        "LoadBalancerArn": Object {
+        "LoadBalancerArn": {
           "Ref": "MasterServiceLBA62FC209",
         },
         "Port": 80,
@@ -509,47 +509,47 @@ Object {
       },
       "Type": "AWS::ElasticLoadBalancingV2::Listener",
     },
-    "MasterServiceLBPublicListenerECSGroup2ADF8BD2": Object {
-      "DependsOn": Array [
+    "MasterServiceLBPublicListenerECSGroup2ADF8BD2": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
       ],
-      "Properties": Object {
+      "Properties": {
         "HealthCheckIntervalSeconds": 15,
         "HealthyThresholdCount": 2,
-        "Matcher": Object {
+        "Matcher": {
           "HttpCode": "200,302",
         },
         "Port": 80,
         "Protocol": "HTTP",
-        "TargetGroupAttributes": Array [
-          Object {
+        "TargetGroupAttributes": [
+          {
             "Key": "stickiness.enabled",
             "Value": "false",
           },
-          Object {
+          {
             "Key": "deregistration_delay.timeout_seconds",
             "Value": "10",
           },
         ],
         "TargetType": "ip",
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
     },
-    "MasterServiceLBSecurityGroupD08B195F": Object {
-      "DependsOn": Array [
+    "MasterServiceLBSecurityGroupD08B195F": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
       ],
-      "Properties": Object {
+      "Properties": {
         "GroupDescription": "Automatically created Security Group for ELB MyTestStackMasterServiceLBE4F14E5D",
-        "SecurityGroupIngress": Array [
-          Object {
+        "SecurityGroupIngress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "from 0.0.0.0/0:80",
             "FromPort": 80,
@@ -557,29 +557,29 @@ Object {
             "ToPort": 80,
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "MasterServiceLBSecurityGrouptoMyTestStackMasterServiceSecurityGroupE67F99DB80899337C012": Object {
-      "DependsOn": Array [
+    "MasterServiceLBSecurityGrouptoMyTestStackMasterServiceSecurityGroupE67F99DB80899337C012": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
       ],
-      "Properties": Object {
+      "Properties": {
         "Description": "Load balancer to target",
-        "DestinationSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
+        "DestinationSecurityGroupId": {
+          "Fn::GetAtt": [
             "MasterServiceSecurityGroup15959E4E",
             "GroupId",
           ],
         },
         "FromPort": 8089,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
+        "GroupId": {
+          "Fn::GetAtt": [
             "MasterServiceLBSecurityGroupD08B195F",
             "GroupId",
           ],
@@ -589,41 +589,41 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupEgress",
     },
-    "MasterServiceSecurityGroup15959E4E": Object {
-      "DependsOn": Array [
+    "MasterServiceSecurityGroup15959E4E": {
+      "DependsOn": [
         "MasterTaskDefinitionTaskRole4D5064F8",
       ],
-      "Properties": Object {
+      "Properties": {
         "GroupDescription": "MyTestStack/Master/Service/Service/SecurityGroup",
-        "SecurityGroupEgress": Array [
-          Object {
+        "SecurityGroupEgress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "MasterServiceSecurityGroupfromMyTestStackMasterServiceLBSecurityGroupF151AF3D80891A97AF54": Object {
-      "DependsOn": Array [
+    "MasterServiceSecurityGroupfromMyTestStackMasterServiceLBSecurityGroupF151AF3D80891A97AF54": {
+      "DependsOn": [
         "MasterTaskDefinitionTaskRole4D5064F8",
       ],
-      "Properties": Object {
+      "Properties": {
         "Description": "Load balancer to target",
         "FromPort": 8089,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
+        "GroupId": {
+          "Fn::GetAtt": [
             "MasterServiceSecurityGroup15959E4E",
             "GroupId",
           ],
         },
         "IpProtocol": "tcp",
-        "SourceSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
             "MasterServiceLBSecurityGroupD08B195F",
             "GroupId",
           ],
@@ -632,22 +632,22 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
-    "MasterServiceSecurityGroupfromMyTestStackWorkerServiceSecurityGroup4859B45B55573987A617": Object {
-      "DependsOn": Array [
+    "MasterServiceSecurityGroupfromMyTestStackWorkerServiceSecurityGroup4859B45B55573987A617": {
+      "DependsOn": [
         "MasterTaskDefinitionTaskRole4D5064F8",
       ],
-      "Properties": Object {
+      "Properties": {
         "Description": "from MyTestStackWorkerServiceSecurityGroup4859B45B:5557",
         "FromPort": 5557,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
+        "GroupId": {
+          "Fn::GetAtt": [
             "MasterServiceSecurityGroup15959E4E",
             "GroupId",
           ],
         },
         "IpProtocol": "tcp",
-        "SourceSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
             "WorkerServiceSecurityGroup31B1E69F",
             "GroupId",
           ],
@@ -656,36 +656,36 @@ Object {
       },
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
-    "MasterTaskDefinition1C9B90C0": Object {
-      "Properties": Object {
-        "ContainerDefinitions": Array [
-          Object {
-            "Command": Array [
+    "MasterTaskDefinition1C9B90C0": {
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Command": [
               "--master",
               "--web-login",
             ],
-            "Environment": Array [
-              Object {
+            "Environment": [
+              {
                 "Name": "LOCUST_USERNAME",
                 "Value": "user",
               },
-              Object {
+              {
                 "Name": "LOCUST_PASSWORD",
                 "Value": "password",
               },
-              Object {
+              {
                 "Name": "FLASK_SECRET_KEY",
                 "Value": "dummy",
               },
             ],
             "Essential": true,
-            "Image": Object {
+            "Image": {
               "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:acf5aec7883de3f2a3edc29670a9454d2868d3dc69a64611bfdde26fd8be8f71",
             },
-            "LogConfiguration": Object {
+            "LogConfiguration": {
               "LogDriver": "awslogs",
-              "Options": Object {
-                "awslogs-group": Object {
+              "Options": {
+                "awslogs-group": {
                   "Ref": "MasterTaskDefinitionlocustLogGroupC83D6DB3",
                 },
                 "awslogs-region": "us-west-2",
@@ -693,8 +693,8 @@ Object {
               },
             },
             "Name": "locust",
-            "PortMappings": Array [
-              Object {
+            "PortMappings": [
+              {
                 "ContainerPort": 8089,
                 "Protocol": "tcp",
               },
@@ -702,8 +702,8 @@ Object {
           },
         ],
         "Cpu": "1024",
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "MasterTaskDefinitionExecutionRoleB4264D23",
             "Arn",
           ],
@@ -711,11 +711,11 @@ Object {
         "Family": "MyTestStackMasterTaskDefinitionA981C48F",
         "Memory": "2048",
         "NetworkMode": "awsvpc",
-        "RequiresCompatibilities": Array [
+        "RequiresCompatibilities": [
           "FARGATE",
         ],
-        "TaskRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
             "MasterTaskDefinitionTaskRole4D5064F8",
             "Arn",
           ],
@@ -723,14 +723,14 @@ Object {
       },
       "Type": "AWS::ECS::TaskDefinition",
     },
-    "MasterTaskDefinitionExecutionRoleB4264D23": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "MasterTaskDefinitionExecutionRoleB4264D23": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -740,50 +740,50 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MasterTaskDefinitionExecutionRoleDefaultPolicyD32D6D8E": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "MasterTaskDefinitionExecutionRoleDefaultPolicyD32D6D8E": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":ecr:us-west-2:",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":repository/",
-                    Object {
+                    {
                       "Fn::Sub": "cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2",
                     },
                   ],
                 ],
               },
             },
-            Object {
+            {
               "Action": "ecr:GetAuthorizationToken",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "MasterTaskDefinitionlocustLogGroupC83D6DB3",
                   "Arn",
                 ],
@@ -793,22 +793,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "MasterTaskDefinitionExecutionRoleDefaultPolicyD32D6D8E",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "MasterTaskDefinitionExecutionRoleB4264D23",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "MasterTaskDefinitionTaskRole4D5064F8": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "MasterTaskDefinitionTaskRole4D5064F8": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -818,28 +818,28 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MasterTaskDefinitionlocustLogGroupC83D6DB3": Object {
+    "MasterTaskDefinitionlocustLogGroupC83D6DB3": {
       "DeletionPolicy": "Retain",
-      "Properties": Object {
+      "Properties": {
         "RetentionInDays": 180,
       },
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Retain",
     },
-    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c35E89C93F": Object {
-      "DependsOn": Array [
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c35E89C93F": {
+      "DependsOn": [
         "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B",
         "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
       ],
-      "Properties": Object {
-        "Code": Object {
-          "ZipFile": "\\"use strict\\";var i=Object.defineProperty;var l=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var p=Object.prototype.hasOwnProperty;var m=(e,s)=>{for(var r in s)i(e,r,{get:s[r],enumerable:!0})},u=(e,s,r,a)=>{if(s&&typeof s==\\"object\\"||typeof s==\\"function\\")for(let t of d(s))!p.call(e,t)&&t!==r&&i(e,t,{get:()=>s[t],enumerable:!(a=l(s,t))||a.enumerable});return e};var S=e=>u(i({},\\"__esModule\\",{value:!0}),e);var y={};m(y,{handler:()=>R});module.exports=S(y);var o=require(\\"@aws-sdk/client-iam\\"),n=require(\\"timers/promises\\"),g=new o.IAMClient({}),R=async(e,s)=>{try{switch(e.RequestType){case\\"Create\\":console.log(\`trying to create a service linked role for \${e.ResourceProperties.awsServiceName}\`);let r=new o.CreateServiceLinkedRoleCommand({AWSServiceName:e.ResourceProperties.awsServiceName,Description:e.ResourceProperties.description,CustomSuffix:e.ResourceProperties.customSuffix});await g.send(r),console.log(\\"the service linked role created successfully, now waiting for IAM propagation\\"),await(0,n.setTimeout)(e.ResourceProperties.waitTimeSeconds*1e3);break;case\\"Update\\":break;case\\"Delete\\":break}await c(\\"SUCCESS\\",e,s)}catch(r){r instanceof o.InvalidInputException?(console.log(\`The service linked role seems to already exist, skipping the creation... \${r.message}\`),await c(\\"SUCCESS\\",e,s)):await c(\\"FAILED\\",e,s,r.message)}},c=async(e,s,r,a)=>{let t=JSON.stringify({Status:e,Reason:a??\\"See the details in CloudWatch Log Stream: \\"+r.logStreamName,PhysicalResourceId:r.logStreamName,StackId:s.StackId,RequestId:s.RequestId,LogicalResourceId:s.LogicalResourceId,NoEcho:!1,Data:{}});await(await fetch(s.ResponseURL,{method:\\"PUT\\",body:t,headers:{\\"Content-Type\\":\\"\\",\\"Content-Length\\":t.length.toString()}})).text()};0&&(module.exports={handler});
+      "Properties": {
+        "Code": {
+          "ZipFile": ""use strict";var i=Object.defineProperty;var l=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var p=Object.prototype.hasOwnProperty;var m=(e,s)=>{for(var r in s)i(e,r,{get:s[r],enumerable:!0})},u=(e,s,r,a)=>{if(s&&typeof s=="object"||typeof s=="function")for(let t of d(s))!p.call(e,t)&&t!==r&&i(e,t,{get:()=>s[t],enumerable:!(a=l(s,t))||a.enumerable});return e};var S=e=>u(i({},"__esModule",{value:!0}),e);var y={};m(y,{handler:()=>R});module.exports=S(y);var o=require("@aws-sdk/client-iam"),n=require("timers/promises"),g=new o.IAMClient({}),R=async(e,s)=>{try{switch(e.RequestType){case"Create":console.log(\`trying to create a service linked role for \${e.ResourceProperties.awsServiceName}\`);let r=new o.CreateServiceLinkedRoleCommand({AWSServiceName:e.ResourceProperties.awsServiceName,Description:e.ResourceProperties.description,CustomSuffix:e.ResourceProperties.customSuffix});await g.send(r),console.log("the service linked role created successfully, now waiting for IAM propagation"),await(0,n.setTimeout)(e.ResourceProperties.waitTimeSeconds*1e3);break;case"Update":break;case"Delete":break}await c("SUCCESS",e,s)}catch(r){r instanceof o.InvalidInputException?(console.log(\`The service linked role seems to already exist, skipping the creation... \${r.message}\`),await c("SUCCESS",e,s)):await c("FAILED",e,s,r.message)}},c=async(e,s,r,a)=>{let t=JSON.stringify({Status:e,Reason:a??"See the details in CloudWatch Log Stream: "+r.logStreamName,PhysicalResourceId:r.logStreamName,StackId:s.StackId,RequestId:s.RequestId,LogicalResourceId:s.LogicalResourceId,NoEcho:!1,Data:{}});await(await fetch(s.ResponseURL,{method:"PUT",body:t,headers:{"Content-Type":"","Content-Length":t.length.toString()}})).text()};0&&(module.exports={handler});
 ",
         },
         "Handler": "index.handler",
         "MemorySize": 128,
-        "Role": Object {
-          "Fn::GetAtt": Array [
+        "Role": {
+          "Fn::GetAtt": [
             "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
             "Arn",
           ],
@@ -849,27 +849,27 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "arn:",
-                Object {
+                {
                   "Ref": "AWS::Partition",
                 },
                 ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
@@ -880,11 +880,11 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "iam:CreateServiceLinkedRole",
               "Effect": "Allow",
               "Resource": "*",
@@ -893,22 +893,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRoleDefaultPolicy2922032B",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "UpsertSlrCustomResourceHandler8f7be66a3315474baea16ceca43d27c3ServiceRole3F877DF6",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "Vpc8378EB38": Object {
-      "Properties": Object {
+    "Vpc8378EB38": {
+      "Properties": {
         "CidrBlock": "10.0.0.0/16",
         "EnableDnsHostnames": true,
         "EnableDnsSupport": true,
         "InstanceTenancy": "default",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc",
           },
@@ -916,19 +916,19 @@ Object {
       },
       "Type": "AWS::EC2::VPC",
     },
-    "VpcFlowLogS3FlowLogCC5B61E6": Object {
-      "DependsOn": Array [
+    "VpcFlowLogS3FlowLogCC5B61E6": {
+      "DependsOn": [
         "LogBucketAutoDeleteObjectsCustomResource7762F42C",
         "LogBucketPolicy900DBE48",
         "LogBucketCC3B17E8",
       ],
-      "Properties": Object {
-        "LogDestination": Object {
-          "Fn::Join": Array [
+      "Properties": {
+        "LogDestination": {
+          "Fn::Join": [
             "",
-            Array [
-              Object {
-                "Fn::GetAtt": Array [
+            [
+              {
+                "Fn::GetAtt": [
                   "LogBucketCC3B17E8",
                   "Arn",
                 ],
@@ -938,12 +938,12 @@ Object {
           ],
         },
         "LogDestinationType": "s3",
-        "ResourceId": Object {
+        "ResourceId": {
           "Ref": "Vpc8378EB38",
         },
         "ResourceType": "VPC",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/FlowLogS3",
           },
@@ -952,10 +952,10 @@ Object {
       },
       "Type": "AWS::EC2::FlowLog",
     },
-    "VpcIGWD7BA715C": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "VpcIGWD7BA715C": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc",
           },
@@ -963,164 +963,164 @@ Object {
       },
       "Type": "AWS::EC2::InternetGateway",
     },
-    "VpcPrivateSubnet1DefaultRouteBE02A9ED": Object {
-      "Properties": Object {
+    "VpcPrivateSubnet1DefaultRouteBE02A9ED": {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "NatGatewayId": Object {
+        "NatGatewayId": {
           "Ref": "VpcPublicSubnet1NATGateway4D7517AA",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "VpcPrivateSubnet1RouteTableB2C5B500",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "VpcPrivateSubnet1RouteTableAssociation70C59FA6": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "VpcPrivateSubnet1RouteTableAssociation70C59FA6": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "VpcPrivateSubnet1RouteTableB2C5B500",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "VpcPrivateSubnet1Subnet536B997A",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "VpcPrivateSubnet1RouteTableB2C5B500": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "VpcPrivateSubnet1RouteTableB2C5B500": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PrivateSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "VpcPrivateSubnet1Subnet536B997A": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "VpcPrivateSubnet1Subnet536B997A": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             0,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.128.0/18",
         "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "Private",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Private",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PrivateSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "VpcPrivateSubnet2DefaultRoute060D2087": Object {
-      "Properties": Object {
+    "VpcPrivateSubnet2DefaultRoute060D2087": {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "NatGatewayId": Object {
+        "NatGatewayId": {
           "Ref": "VpcPublicSubnet1NATGateway4D7517AA",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "VpcPrivateSubnet2RouteTableA678073B",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "VpcPrivateSubnet2RouteTableA678073B": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "VpcPrivateSubnet2RouteTableA678073B": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PrivateSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "VpcPrivateSubnet2RouteTableAssociationA89CAD56": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "VpcPrivateSubnet2RouteTableAssociationA89CAD56": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "VpcPrivateSubnet2RouteTableA678073B",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "VpcPrivateSubnet2Subnet3788AAA1",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "VpcPrivateSubnet2Subnet3788AAA1": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "VpcPrivateSubnet2Subnet3788AAA1": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             1,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.192.0/18",
         "MapPublicIpOnLaunch": false,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "Private",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Private",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PrivateSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "VpcPublicSubnet1DefaultRoute3DA9E72A": Object {
-      "DependsOn": Array [
+    "VpcPublicSubnet1DefaultRoute3DA9E72A": {
+      "DependsOn": [
         "VpcVPCGWBF912B6E",
       ],
-      "Properties": Object {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
+        "GatewayId": {
           "Ref": "VpcIGWD7BA715C",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "VpcPublicSubnet1RouteTable6C95E38E",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "VpcPublicSubnet1EIPD7E02669": Object {
-      "Properties": Object {
+    "VpcPublicSubnet1EIPD7E02669": {
+      "Properties": {
         "Domain": "vpc",
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet1",
           },
@@ -1128,23 +1128,23 @@ Object {
       },
       "Type": "AWS::EC2::EIP",
     },
-    "VpcPublicSubnet1NATGateway4D7517AA": Object {
-      "DependsOn": Array [
+    "VpcPublicSubnet1NATGateway4D7517AA": {
+      "DependsOn": [
         "VpcPublicSubnet1DefaultRoute3DA9E72A",
         "VpcPublicSubnet1RouteTableAssociation97140677",
       ],
-      "Properties": Object {
-        "AllocationId": Object {
-          "Fn::GetAtt": Array [
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
             "VpcPublicSubnet1EIPD7E02669",
             "AllocationId",
           ],
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
         },
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet1",
           },
@@ -1152,167 +1152,167 @@ Object {
       },
       "Type": "AWS::EC2::NatGateway",
     },
-    "VpcPublicSubnet1RouteTable6C95E38E": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "VpcPublicSubnet1RouteTable6C95E38E": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "VpcPublicSubnet1RouteTableAssociation97140677": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "VpcPublicSubnet1RouteTableAssociation97140677": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "VpcPublicSubnet1RouteTable6C95E38E",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "VpcPublicSubnet1Subnet5C2D37C4": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "VpcPublicSubnet1Subnet5C2D37C4": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             0,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.0.0/18",
         "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "VpcPublicSubnet2DefaultRoute97F91067": Object {
-      "DependsOn": Array [
+    "VpcPublicSubnet2DefaultRoute97F91067": {
+      "DependsOn": [
         "VpcVPCGWBF912B6E",
       ],
-      "Properties": Object {
+      "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": Object {
+        "GatewayId": {
           "Ref": "VpcIGWD7BA715C",
         },
-        "RouteTableId": Object {
+        "RouteTableId": {
           "Ref": "VpcPublicSubnet2RouteTable94F7E489",
         },
       },
       "Type": "AWS::EC2::Route",
     },
-    "VpcPublicSubnet2RouteTable94F7E489": Object {
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+    "VpcPublicSubnet2RouteTable94F7E489": {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::RouteTable",
     },
-    "VpcPublicSubnet2RouteTableAssociationDD5762D8": Object {
-      "Properties": Object {
-        "RouteTableId": Object {
+    "VpcPublicSubnet2RouteTableAssociationDD5762D8": {
+      "Properties": {
+        "RouteTableId": {
           "Ref": "VpcPublicSubnet2RouteTable94F7E489",
         },
-        "SubnetId": Object {
+        "SubnetId": {
           "Ref": "VpcPublicSubnet2Subnet691E08A3",
         },
       },
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
     },
-    "VpcPublicSubnet2Subnet691E08A3": Object {
-      "Properties": Object {
-        "AvailabilityZone": Object {
-          "Fn::Select": Array [
+    "VpcPublicSubnet2Subnet691E08A3": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
             1,
-            Object {
+            {
               "Fn::GetAZs": "",
             },
           ],
         },
         "CidrBlock": "10.0.64.0/18",
         "MapPublicIpOnLaunch": true,
-        "Tags": Array [
-          Object {
+        "Tags": [
+          {
             "Key": "aws-cdk:subnet-name",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "aws-cdk:subnet-type",
             "Value": "Public",
           },
-          Object {
+          {
             "Key": "Name",
             "Value": "MyTestStack/Vpc/PublicSubnet2",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::Subnet",
     },
-    "VpcVPCGWBF912B6E": Object {
-      "Properties": Object {
-        "InternetGatewayId": Object {
+    "VpcVPCGWBF912B6E": {
+      "Properties": {
+        "InternetGatewayId": {
           "Ref": "VpcIGWD7BA715C",
         },
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::VPCGatewayAttachment",
     },
-    "WorkerService3F60922A": Object {
-      "DependsOn": Array [
+    "WorkerService3F60922A": {
+      "DependsOn": [
         "WorkerTaskDefinitionTaskRoleDCDA51F5",
       ],
-      "Properties": Object {
-        "CapacityProviderStrategy": Array [
-          Object {
+      "Properties": {
+        "CapacityProviderStrategy": [
+          {
             "CapacityProvider": "FARGATE_SPOT",
             "Weight": 1,
           },
-          Object {
+          {
             "CapacityProvider": "FARGATE",
             "Weight": 0,
           },
         ],
-        "Cluster": Object {
+        "Cluster": {
           "Ref": "ClusterEB0386A7",
         },
-        "DeploymentConfiguration": Object {
-          "Alarms": Object {
-            "AlarmNames": Array [],
+        "DeploymentConfiguration": {
+          "Alarms": {
+            "AlarmNames": [],
             "Enable": false,
             "Rollback": false,
           },
@@ -1320,69 +1320,69 @@ Object {
           "MinimumHealthyPercent": 0,
         },
         "EnableECSManagedTags": false,
-        "NetworkConfiguration": Object {
-          "AwsvpcConfiguration": Object {
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
             "AssignPublicIp": "DISABLED",
-            "SecurityGroups": Array [
-              Object {
-                "Fn::GetAtt": Array [
+            "SecurityGroups": [
+              {
+                "Fn::GetAtt": [
                   "WorkerServiceSecurityGroup31B1E69F",
                   "GroupId",
                 ],
               },
             ],
-            "Subnets": Array [
-              Object {
+            "Subnets": [
+              {
                 "Ref": "VpcPrivateSubnet1Subnet536B997A",
               },
-              Object {
+              {
                 "Ref": "VpcPrivateSubnet2Subnet3788AAA1",
               },
             ],
           },
         },
-        "TaskDefinition": Object {
+        "TaskDefinition": {
           "Ref": "WorkerTaskDefinitionC7EEADA6",
         },
       },
       "Type": "AWS::ECS::Service",
     },
-    "WorkerServiceSecurityGroup31B1E69F": Object {
-      "DependsOn": Array [
+    "WorkerServiceSecurityGroup31B1E69F": {
+      "DependsOn": [
         "WorkerTaskDefinitionTaskRoleDCDA51F5",
       ],
-      "Properties": Object {
+      "Properties": {
         "GroupDescription": "MyTestStack/Worker/Service/SecurityGroup",
-        "SecurityGroupEgress": Array [
-          Object {
+        "SecurityGroupEgress": [
+          {
             "CidrIp": "0.0.0.0/0",
             "Description": "Allow all outbound traffic by default",
             "IpProtocol": "-1",
           },
         ],
-        "VpcId": Object {
+        "VpcId": {
           "Ref": "Vpc8378EB38",
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "WorkerTaskDefinitionC7EEADA6": Object {
-      "Properties": Object {
-        "ContainerDefinitions": Array [
-          Object {
-            "Command": Array [
+    "WorkerTaskDefinitionC7EEADA6": {
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Command": [
               "--worker",
               "--master-host",
               "master.locust",
             ],
             "Essential": true,
-            "Image": Object {
+            "Image": {
               "Fn::Sub": "\${AWS::AccountId}.dkr.ecr.us-west-2.\${AWS::URLSuffix}/cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2:acf5aec7883de3f2a3edc29670a9454d2868d3dc69a64611bfdde26fd8be8f71",
             },
-            "LogConfiguration": Object {
+            "LogConfiguration": {
               "LogDriver": "awslogs",
-              "Options": Object {
-                "awslogs-group": Object {
+              "Options": {
+                "awslogs-group": {
                   "Ref": "WorkerTaskDefinitionlocustLogGroup0EA81668",
                 },
                 "awslogs-region": "us-west-2",
@@ -1390,8 +1390,8 @@ Object {
               },
             },
             "Name": "locust",
-            "Ulimits": Array [
-              Object {
+            "Ulimits": [
+              {
                 "HardLimit": 10000,
                 "Name": "nofile",
                 "SoftLimit": 10000,
@@ -1400,8 +1400,8 @@ Object {
           },
         ],
         "Cpu": "1024",
-        "ExecutionRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
             "WorkerTaskDefinitionExecutionRole04BD42F4",
             "Arn",
           ],
@@ -1409,11 +1409,11 @@ Object {
         "Family": "MyTestStackWorkerTaskDefinition957E58DF",
         "Memory": "2048",
         "NetworkMode": "awsvpc",
-        "RequiresCompatibilities": Array [
+        "RequiresCompatibilities": [
           "FARGATE",
         ],
-        "TaskRoleArn": Object {
-          "Fn::GetAtt": Array [
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
             "WorkerTaskDefinitionTaskRoleDCDA51F5",
             "Arn",
           ],
@@ -1421,14 +1421,14 @@ Object {
       },
       "Type": "AWS::ECS::TaskDefinition",
     },
-    "WorkerTaskDefinitionExecutionRole04BD42F4": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "WorkerTaskDefinitionExecutionRole04BD42F4": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -1438,50 +1438,50 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "WorkerTaskDefinitionExecutionRoleDefaultPolicy32BEDE20": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "WorkerTaskDefinitionExecutionRoleDefaultPolicy32BEDE20": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:BatchGetImage",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":ecr:us-west-2:",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":repository/",
-                    Object {
+                    {
                       "Fn::Sub": "cdk-hnb659fds-container-assets-\${AWS::AccountId}-us-west-2",
                     },
                   ],
                 ],
               },
             },
-            Object {
+            {
               "Action": "ecr:GetAuthorizationToken",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "WorkerTaskDefinitionlocustLogGroup0EA81668",
                   "Arn",
                 ],
@@ -1491,22 +1491,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "WorkerTaskDefinitionExecutionRoleDefaultPolicy32BEDE20",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "WorkerTaskDefinitionExecutionRole04BD42F4",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "WorkerTaskDefinitionTaskRoleDCDA51F5": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "WorkerTaskDefinitionTaskRoleDCDA51F5": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "ecs-tasks.amazonaws.com",
               },
             },
@@ -1516,31 +1516,31 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "WorkerTaskDefinitionlocustLogGroup0EA81668": Object {
+    "WorkerTaskDefinitionlocustLogGroup0EA81668": {
       "DeletionPolicy": "Retain",
-      "Properties": Object {
+      "Properties": {
         "RetentionInDays": 180,
       },
       "Type": "AWS::Logs::LogGroup",
       "UpdateReplacePolicy": "Retain",
     },
   },
-  "Rules": Object {
-    "CheckBootstrapVersion": Object {
-      "Assertions": Array [
-        Object {
-          "Assert": Object {
-            "Fn::Not": Array [
-              Object {
-                "Fn::Contains": Array [
-                  Array [
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
                     "1",
                     "2",
                     "3",
                     "4",
                     "5",
                   ],
-                  Object {
+                  {
                     "Ref": "BootstrapVersion",
                   },
                 ],
